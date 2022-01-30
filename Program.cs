@@ -21,7 +21,7 @@ namespace teamev.api
             .ConfigureWebHostDefaults(webBuilder =>
             {
               webBuilder
-                  .UseUrls("http://*:5000")
+                  .UseUrls("http://*:80")
                   .UseStartup<Startup>();
             });
   }
