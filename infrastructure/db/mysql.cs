@@ -15,8 +15,9 @@ namespace teamev.api.infrastructure.db
     public MySqlConnection mySqlConnection;
     public MysqlDb()
     {
-      this.mySqlConnection = new MySqlConnection();
+      this.mySqlConnection = new MySqlConnection(dsn);
       mySqlConnection.Open();
+      Console.WriteLine("やあ");
     }
 
     public MySqlCommand DBConnect()

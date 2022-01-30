@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using teamev.api.infrastructure.db;
 
 namespace teamev.api
 {
@@ -27,7 +28,8 @@ namespace teamev.api
     //COnfigureServicesはDIを定義するためのメソッド
     public void ConfigureServices(IServiceCollection services)
     {
-
+      //mysqlの接続かつ1つのインスタンスを作成。
+      services.AddSingleton<MysqlDb>();
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
