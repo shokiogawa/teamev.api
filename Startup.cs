@@ -33,7 +33,7 @@ namespace teamev.api
     {
       services.AddDbContext<UserContext>(options =>
       {
-        options.UseMySQL("server=teamev_db;database=mysql;user=user;password=secret");
+        options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
       });
       //mysqlの接続かつ1つのインスタンスを作成。
       // services.AddSingleton<MysqlDb>();
