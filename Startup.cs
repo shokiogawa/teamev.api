@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using teamev.api.infrastructure.db;
+using teamev.api.infrastructure.db.db_context;
+using Microsoft.EntityFrameworkCore;
+using MySql.EntityFrameworkCore;
 
 namespace teamev.api
 {
@@ -28,8 +31,12 @@ namespace teamev.api
     //COnfigureServicesはDIを定義するためのメソッド
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddDbContext<UserContext>(options =>
+      {
+        options.UseMySQL("server=teamev_db;database=mysql;user=user;password=secret");
+      });
       //mysqlの接続かつ1つのインスタンスを作成。
-      services.AddSingleton<MysqlDb>();
+      // services.AddSingleton<MysqlDb>();
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
