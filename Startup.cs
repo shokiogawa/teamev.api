@@ -31,12 +31,12 @@ namespace teamev.api
     //COnfigureServicesはDIを定義するためのメソッド
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<UserContext>(options =>
+      services.AddDbContext<MyAppContext>(options =>
       {
         options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
       });
       //mysqlの接続かつ1つのインスタンスを作成。
-      // services.AddSingleton<MysqlDb>();
+      services.AddSingleton<MysqlDb>();
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
