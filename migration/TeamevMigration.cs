@@ -10,13 +10,13 @@ namespace teamev.api.migration
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-      migrationBuilder.Sql(File.ReadAllText("migration/teamev.sql"));
+      migrationBuilder.Sql(File.ReadAllText("migration/SqlScript.sql"));
 
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-      migrationBuilder.Sql(File.ReadAllText("migration/drop.sql"));
+      migrationBuilder.Sql(File.ReadAllText("migration/SqlDrop.sql"));
     }
   }
 }
