@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
 using System.IO;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using teamev.api.infrastructure.db.db_context;
