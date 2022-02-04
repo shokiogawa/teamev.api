@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/src/teamev.api.csproj": {}
+    "/Users/ogawashoki/プロジェクトフォルダ/Myプロジェクト/teamEV/teamev.api/teamev.api.csproj": {}
   },
   "projects": {
-    "/src/teamev.api.csproj": {
+    "/Users/ogawashoki/プロジェクトフォルダ/Myプロジェクト/teamEV/teamev.api/teamev.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/src/teamev.api.csproj",
+        "projectUniqueName": "/Users/ogawashoki/プロジェクトフォルダ/Myプロジェクト/teamEV/teamev.api/teamev.api.csproj",
         "projectName": "teamev.api",
-        "projectPath": "/src/teamev.api.csproj",
-        "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/src/obj/",
+        "projectPath": "/Users/ogawashoki/プロジェクトフォルダ/Myプロジェクト/teamEV/teamev.api/teamev.api.csproj",
+        "packagesPath": "/Users/ogawashoki/.nuget/packages/",
+        "outputPath": "/Users/ogawashoki/プロジェクトフォルダ/Myプロジェクト/teamEV/teamev.api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "/Users/ogawashoki/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -38,6 +38,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.9, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.13, )"
@@ -79,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.404/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }
