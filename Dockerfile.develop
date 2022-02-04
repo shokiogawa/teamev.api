@@ -5,3 +5,5 @@ COPY teamev.api.csproj ./
 RUN dotnet restore
 COPY . .
 RUN dotnet dev-certs https --clean && dotnet dev-certs https -t
+# RUN dotnet tool install --global dotnet-ef
+# ENV export PATH="$PATH:/root/.dotnet/tools"
