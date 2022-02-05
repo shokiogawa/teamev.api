@@ -15,6 +15,11 @@ using teamev.api.infrastructure.db;
 using teamev.api.infrastructure.db.db_context;
 using Microsoft.EntityFrameworkCore;
 using MySql.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using teamev.api.presentation.firebase;
 
 namespace teamev.api
 {
@@ -35,12 +40,24 @@ namespace teamev.api
       {
         options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
       });
+      //firebase認証
+      services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成。
       services.AddSingleton<MysqlDb>();
       services.AddControllers();
-      services.AddSwaggerGen(c =>
+      services
+      .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      .AddJwtBearer(options =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "teamev.api", Version = "v1" });
+        options.Authority = "https://securetoken.google.com/teamev-3d0e0";
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+          ValidateIssuer = true,
+          ValidIssuer = "https://securetoken.google.com/teamev-3d0e0",
+          ValidateAudience = true,
+          ValidAudience = "teamev-3d0e0",
+          ValidateLifetime = true
+        };
       });
     }
 
@@ -48,18 +65,18 @@ namespace teamev.api
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "teamev.api v1"));
-        Console.WriteLine("Develop");
-      }
+      // if (env.IsDevelopment())
+      // {
+      //   app.UseDeveloperExceptionPage();
+      //   app.UseSwagger();
+      //   app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "teamev.api v1"));
+      //   Console.WriteLine("Develop");
+      // }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
 
       app.UseRouting();
-
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>

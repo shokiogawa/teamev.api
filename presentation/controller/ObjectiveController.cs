@@ -5,16 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using teamev.api.presentation.dto;
+using Microsoft.AspNetCore.Authorization;
+using teamev.api.presentation.firebase;
 namespace teamev.api.Controllers
 {
   [ApiController]
   [Route("objective")]
-  public class ObjecticeController : ControllerBase
+  public class ObjectiveController : ControllerBase
   {
+    private readonly FirebaseInitApp firebaseMethod;
+    public ObjectiveController(FirebaseInitApp firebaseInitApp)
+    {
+      this.firebaseMethod = firebaseInitApp;
+    }
+    [Authorize]
     [HttpGet]
-    public void GetObjective()
+    public void GetObjective([FromHeader] string token)
     {
       Console.WriteLine("やあ");
+      // string userUid = firebaseMethod.GetValifyUserUid(token);
     }
 
     [HttpGet("{id}")]
