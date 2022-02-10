@@ -15,6 +15,9 @@ namespace teamev.api.domain.entity
     [Column(TypeName = "char(36)")]
     public Guid PublicUserId { get; set; }
 
+    [Required]
+    public int TeamId { get; set; }
+
     [Required(ErrorMessage = "name is required")]
     [EmailAddress(ErrorMessage = "this email is invalid")]
     public string Email { get; set; }
@@ -28,9 +31,10 @@ namespace teamev.api.domain.entity
     [Required(ErrorMessage = "status is required")]
     public STATUS Status { get; set; }
 
-    public User(string email, string password, string name, STATUS status)
+    public User(int teamId, string email, string password, string name, STATUS status)
     {
       PublicUserId = Guid.NewGuid();
+      TeamId = teamId;
       Email = email;
       Password = password;
       Name = name;
