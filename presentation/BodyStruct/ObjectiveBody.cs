@@ -1,6 +1,6 @@
-namespace teamev.api.presentation.dto
+namespace teamev.api.presentation.BodyStruct
 {
-  public class ObjectiveDto
+  public struct ObjectiveBody
   {
     public string Title { get; set; }
     public string Content { get; set; }

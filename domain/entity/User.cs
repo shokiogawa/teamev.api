@@ -10,31 +10,37 @@ namespace teamev.api.domain.entity
   }
   public class User
   {
-    [Key]
-    public int Id { get; set; }
+    public int Id { get; }
+
+    [Required]
+    public string UserUid { get; }
+
+
     [Column(TypeName = "char(36)")]
     public Guid PublicUserId { get; set; }
 
     [Required(ErrorMessage = "name is required")]
     [EmailAddress(ErrorMessage = "this email is invalid")]
-    public string Email { get; set; }
-
-    [Required(ErrorMessage = "password is required")]
-    public string Password { get; set; }
+    public string Email { get; }
 
     [Required(ErrorMessage = "name is required")]
-    public string Name { get; set; }
+    public string Name { get; }
 
-    [Required(ErrorMessage = "status is required")]
-    public STATUS Status { get; set; }
+    public STATUS Status { get; }
 
-    public User(string email, string password, string name, STATUS status)
+    public User(string userUid, string name, string email)
     {
-      PublicUserId = Guid.NewGuid();
-      Email = email;
-      Password = password;
-      Name = name;
-      Status = status;
+      if (userUid == null || name == null || email == null)
+      {
+        Console.WriteLine(userUid);
+        Console.WriteLine(name);
+        Console.WriteLine(email);
+        throw new Exception("user parameter is required");
+      }
+      this.PublicUserId = Guid.NewGuid();
+      this.UserUid = userUid;
+      this.Email = email;
+      this.Name = name;
     }
   }
 }

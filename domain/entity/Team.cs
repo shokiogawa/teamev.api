@@ -7,9 +7,12 @@ namespace teamev.api.domain.entity
   {
     [Key]
     public int Id { get; set; }
-    [Column(TypeName = "char(36)")]
 
+    [Column(TypeName = "char(36)")]
     public Guid PublicTeamId { get; set; }
+
+    [Required]
+    public int UserId { get; set; }
 
     [Required(ErrorMessage = "team name is required")]
     public string Name { get; set; }
@@ -17,9 +20,10 @@ namespace teamev.api.domain.entity
     [Required(ErrorMessage = "number is required")]
     public int Number { get; set; }
 
-    public Team(string name, int number)
+    public Team(int userId, string name, int number)
     {
       PublicTeamId = Guid.NewGuid();
+      UserId = userId;
       Name = name;
       Number = number;
     }

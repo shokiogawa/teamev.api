@@ -5,11 +5,9 @@
 );
 CREATE TABLE IF NOT EXISTS users(
   id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  public_user_id VARCHAR(36) NOT NULL,
+  user_uid VARCHAR(64) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
   name VARCHAR(32) NOT NULL,
-  status enum("LEADER", "MEMBER") NOT NULL DEFAULT "MEMBER",
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -21,13 +19,53 @@ CREATE TABLE IF NOT EXISTS teams(
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-CREATE TABLE IF NOT EXISTS objectives(
+CREATE TABLE IF NOT EXISTS user_team_middles(
+  id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id MEDIUMINT NOT NULL,
+  team_id MEDIUMINT NOT NULL,
+  status enum("LEADER", "MEMBER") NOT NULL DEFAULT "MEMBER",
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(team_id) REFERENCES teams(id)
+);
+CREATE TABLE IF NOT EXISTS team_objectives(
   id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   public_objective_id VARCHAR(36) NOT NULL,
+  team_id MEDIUMINT NOT NULL,
+  use_date DATE NOT NULL,
+  title VARCHAR(128) NOT NULL,
+  content VARCHAR(225) NOT NULL,
+  author VARCHAR(32) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(team_id) REFERENCES teams(id)
+);
+CREATE TABLE IF NOT EXISTS user_objectives(
+  id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  public_objective_id VARCHAR(36) NOT NULL,
+  user_id MEDIUMINT NOT NULL,
+  team_id MEDIUMINT NOT NULL,
   use_date TIMESTAMP NOT NULL,
   title VARCHAR(128) NOT NULL,
   content VARCHAR(225) NOT NULL,
   author VARCHAR(32) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(team_id) REFERENCES teams(id)
 );
+-- INSERT INTO
+--   users (user_uid, name, email, password) VALUE(
+--     "jIYzNBUYWcNpMkvpxdofV0UEezx1",
+--     "小川翔生",
+--     "shouki2578@gmail.com",
+--     "secret"
+--   );
+-- INSERT INTO
+--   teams (public_team_id, name, number) VALUE (
+--     "c36f55b0-b96a-47ed-80a8-170a01fd9720",
+--     "Teamev",
+--     0
+--   );
+-- INSERT INTO
+--   user_team_middles(user_id, team_id, status)
+-- VALUES(1, 1, "LEADER")

@@ -17,9 +17,9 @@ namespace teamev.api.domain.value_object
 
     public ObjectiveInfo(string title, string content, string author)
     {
-      Title = title;
-      Content = content;
-      Author = author;
+      this.Title = title;
+      this.Content = content;
+      this.Author = author;
     }
   }
 }
