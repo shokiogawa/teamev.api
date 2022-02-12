@@ -36,9 +36,7 @@ namespace teamev.api.infrastructure.repository_imp
       }
       catch (Exception error)
       {
-        Console.WriteLine(error);
-        Console.WriteLine("'----------------------'");
-        throw new Exception("エラーが出たよ");
+        throw error;
       }
     }
   }

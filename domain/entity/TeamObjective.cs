@@ -8,19 +8,19 @@ namespace teamev.api.domain.entity
   public class TeamObjective
   {
     [Key]
-    public int Id { get; set; }
+    public int Id { get; }
 
     [Column(TypeName = "char(36)")]
-    public Guid PublicObjectiveId { get; set; }
+    public Guid PublicObjectiveId { get; }
 
     [Required]
-    public int TeamId { get; set; }
+    public int TeamId { get; }
 
     [Required(ErrorMessage = "date time is required")]
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; }
 
     [Required]
-    public ObjectiveInfo ObjectiveInfo { get; set; }
+    public ObjectiveInfo ObjectiveInfo { get; }
 
     public TeamObjective(int teamId, ObjectiveInfo objectiveInfo)
     {

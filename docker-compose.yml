@@ -36,11 +36,11 @@ services:
     networks:
       - teamev_net
   
-  firebase:
-    container_name: teamev_firebase
-    image: shoki2578/teamev-firebase
-    ports: 
-     - "3000:3000"
+  # firebase:
+  #   container_name: teamev_firebase
+  #   image: shoki2578/teamev-firebase
+  #   ports: 
+  #    - "3000:3000"
 
 networks:
   teamev_net:

@@ -23,7 +23,8 @@ using teamev.api.presentation.firebase;
 using teamev.api.usecase.command;
 using teamev.api.infrastructure.repository_imp;
 using teamev.api.domain.repository_interface;
-using teamev.api.domain.domain_service;
+using teamev.api.domain.domain_service_interface;
+using teamev.api.infrastructure.domain_service_imp;
 namespace teamev.api
 {
   public class Startup
@@ -48,11 +49,14 @@ namespace teamev.api
       //mysqlの接続かつ1つのインスタンスを作成。
       services.AddSingleton<MysqlDb>();
       //ドメインサービス
-      services.AddSingleton<ObjectiveDomainService>();
+      services.AddSingleton<IUserDomainService, UserDomainService>();
+      services.AddSingleton<IObjectiveDomainService, ObjectiveDomainService>();
       //infrastructure
       services.AddSingleton<IObjectiveRepository, ObjectiveRepository>();
+      services.AddSingleton<IUserRepository, UserRepository>();
       //usecase(返り値がない)
       services.AddSingleton<CreateObjectiveUsecase>();
+      services.AddSingleton<CreateUserUsecase>();
       services.AddControllers();
       // services
       // .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

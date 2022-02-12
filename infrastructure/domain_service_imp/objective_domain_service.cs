@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using teamev.api.infrastructure.db;
-namespace teamev.api.domain.domain_service
+using teamev.api.domain.domain_service_interface;
+namespace teamev.api.infrastructure.domain_service_imp
 {
-  public class ObjectiveDomainService
+  public class ObjectiveDomainService : IObjectiveDomainService
   {
     public ObjectiveDomainService(MysqlDb mysqlDb)
     {
@@ -13,10 +14,11 @@ namespace teamev.api.domain.domain_service
 
     private readonly MysqlDb mysqlDb;
 
-    public async Task IsUserJoined(string userUid, Guid publicTeamId)
+    public async Task<int> IsUserJoined(string userUid, Guid publicTeamId)
     {
       try
       {
+        int userId = 0;
         using (var cmd = mysqlDb.DBConnect())
         {
           //user_objectiveの作成タイミングで使用可能。
@@ -26,16 +28,21 @@ namespace teamev.api.domain.domain_service
           cmd.Parameters.AddWithValue("@publicTeamId", publicTeamId);
           using (var result = await cmd.ExecuteReaderAsync())
           {
-            while (result.Read())
+            if (!result.Read())
             {
-              Console.WriteLine(result[0].GetType());
+              throw new Exception("user dose not belong to team");
+            }
+            else
+            {
+              userId = result.GetInt32(0);
             }
           }
         }
+        return userId;
       }
-      catch (Exception e)
+      catch (Exception error)
       {
-        Console.WriteLine(e);
+        throw error;
       }
     }
 
@@ -67,6 +74,38 @@ namespace teamev.api.domain.domain_service
       }
       catch (Exception error)
       {
+        throw error;
+      }
+    }
+
+    public async Task HasTObjectiveCreated(Guid publicTeamId)
+    {
+      try
+      {
+        using (var cmd = mysqlDb.DBConnect())
+        {
+          var today = DateTime.Now;
+          cmd.CommandText = "SELECT team_objectives.id FROM team_objectives LEFT JOIN teams ON team_objectives.team_id = teams.id WHERE public_team_id = @publicTeamId AND use_date = @useDate";
+          cmd.Parameters.AddWithValue("@publicTeamId", publicTeamId);
+          cmd.Parameters.AddWithValue("@useDate", today.ToString("yyyy-MM-dd"));
+
+          using (var result = await cmd.ExecuteReaderAsync())
+          {
+            if (result.Read())
+            {
+              var id = result.GetInt32(0);
+              if (id > 0)
+              {
+                throw new Exception("Objective has already existed");
+              }
+            }
+          }
+        }
+
+      }
+      catch (Exception error)
+      {
+        Console.WriteLine(error);
         throw error;
       }
     }

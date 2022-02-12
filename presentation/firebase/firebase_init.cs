@@ -13,7 +13,7 @@ namespace teamev.api.presentation.firebase
       {
         FirebaseApp.Create(new AppOptions()
         {
-          Credential = GoogleCredential.FromFile("teamev_firebase_auth.json")
+          Credential = GoogleCredential.FromFile("firebase_auth.json")
         });
       }
       catch (Exception e)
