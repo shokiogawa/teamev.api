@@ -3,3 +3,4 @@ mysql
 .vscode
 firebase_auth.json
 bin
+obj
