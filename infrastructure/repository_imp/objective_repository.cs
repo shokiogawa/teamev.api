@@ -14,7 +14,6 @@ namespace teamev.api.infrastructure.repository_imp
     private readonly MysqlDb mysqlDb;
     public async Task CreateAsync(TeamObjective objective)
     {
-      Console.WriteLine("作成開始");
       try
       {
         //usingはメソッド内が終わると破棄される。
@@ -30,7 +29,7 @@ namespace teamev.api.infrastructure.repository_imp
           var result = await cmd.ExecuteNonQueryAsync();
           if (result != 1)
           {
-            Console.WriteLine("Unable to create database");
+            throw new Exception("can not create objective");
           }
         }
       }

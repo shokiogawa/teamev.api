@@ -12,11 +12,11 @@ namespace teamev.api.infrastructure.domain_service_imp
     }
     private readonly MysqlDb _mysqlDb;
 
-    public async Task IsUserCreatedAsync(string userUid)
+    //userが作成されていないことを確認。
+    public async Task IsUserNotCreatedAsync(string userUid)
     {
       try
       {
-        Console.WriteLine("ドメインサービス");
         using (var cmd = _mysqlDb.DBConnect())
         {
           cmd.CommandText = "SELECT id FROM users WHERE user_uid = @userUid";
@@ -35,5 +35,38 @@ namespace teamev.api.infrastructure.domain_service_imp
         throw error;
       }
     }
+
+
+    //userUidがすでに保存されているかの確認。
+    // public async Task<int> IsUserExistedAsync(string userUid)
+    // {
+    //   try
+    //   {
+    //     Console.WriteLine("ドメインサービス");
+    //     using (var cmd = _mysqlDb.DBConnect())
+    //     {
+    //       cmd.CommandText = "SELECT id FROM users WHERE user_uid = @userUid";
+    //       cmd.Parameters.AddWithValue("@userUid", userUid);
+    //       int userId = 0;
+    //       using (var result = await cmd.ExecuteReaderAsync())
+    //       {
+    //         if (result.Read())
+    //         {
+    //           userId = result.GetInt32(0);
+    //         }
+    //         else
+    //         {
+    //           throw new Exception("user is not created");
+    //         }
+    //       }
+    //       return userId;
+    //     }
+    //   }
+    //   catch (Exception error)
+    //   {
+    //     throw error;
+    //   }
+    // }
+
   }
 }

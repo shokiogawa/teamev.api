@@ -40,13 +40,17 @@ namespace teamev.api
     //COnfigureServicesはDIを定義するためのメソッド
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors(o => o.AddDefaultPolicy(builder =>
+     {
+       builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+     }));
       services.AddDbContext<MyAppContext>(options =>
       {
         options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
       });
       //firebase認証
       services.AddSingleton<FirebaseInitApp>();
-      //mysqlの接続かつ1つのインスタンスを作成。
+      //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>();
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -54,9 +58,12 @@ namespace teamev.api
       //infrastructure
       services.AddSingleton<IObjectiveRepository, ObjectiveRepository>();
       services.AddSingleton<IUserRepository, UserRepository>();
+      services.AddSingleton<ITeamRepository, TeamRepository>();
+
       //usecase(返り値がない)
       services.AddSingleton<CreateObjectiveUsecase>();
       services.AddSingleton<CreateUserUsecase>();
+      services.AddSingleton<CreateTeamUsecase>();
       services.AddControllers();
       // services
       // .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -89,6 +96,8 @@ namespace teamev.api
       //   app.UseHttpsRedirection();
 
       app.UseRouting();
+      app.UseCors();
+
       // app.UseAuthentication();
       app.UseAuthorization();
 

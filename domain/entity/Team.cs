@@ -20,12 +20,11 @@ namespace teamev.api.domain.entity
     [Required(ErrorMessage = "number is required")]
     public int Number { get; set; }
 
-    public Team(int userId, string name, int number)
+    public Team(string name)
     {
       PublicTeamId = Guid.NewGuid();
-      UserId = userId;
       Name = name;
-      Number = number;
+      Number = 1;
     }
   }
 }

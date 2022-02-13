@@ -17,7 +17,6 @@ namespace teamev.api.infrastructure.repository_imp
     {
       try
       {
-        Console.WriteLine("リポジトリ");
         using (var cmd = _mysqlDb.DBConnect())
         {
           cmd.CommandText = "INSERT INTO users(user_uid, email, name) VALUE (@userUid, @email, @name)";
