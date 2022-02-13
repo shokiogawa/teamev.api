@@ -3,3 +3,4 @@ mysql
 .vscode
 firebase_auth.json
 bin/Debug/net5.0
+obj
