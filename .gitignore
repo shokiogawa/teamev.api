@@ -2,5 +2,5 @@ mysql
 .idea
 .vscode
 firebase_auth.json
-bin/Debug/net5.0
+bin
 obj
