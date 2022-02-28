@@ -16,7 +16,7 @@ namespace teamev.api.usecase.command
 
     public async Task<Guid> InvokeAsync(string userUid, string teamName)
     {
-      Team team = new(teamName);
+      Team team = new Team().CreateTeam(teamName);
       await _teamrepository.CreateTeamAsync(userUid, team);
       return team.PublicTeamId;
     }

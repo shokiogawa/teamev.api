@@ -25,6 +25,8 @@ using teamev.api.infrastructure.repository_imp;
 using teamev.api.domain.repository_interface;
 using teamev.api.domain.domain_service_interface;
 using teamev.api.infrastructure.domain_service_imp;
+using teamev.api.usecase.query.query_service_interface;
+using teamev.api.infrastructure.query_service;
 namespace teamev.api
 {
   public class Startup
@@ -52,13 +54,17 @@ namespace teamev.api
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>();
+
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
       services.AddSingleton<IObjectiveDomainService, ObjectiveDomainService>();
+
       //infrastructure
       services.AddSingleton<IObjectiveRepository, ObjectiveRepository>();
       services.AddSingleton<IUserRepository, UserRepository>();
       services.AddSingleton<ITeamRepository, TeamRepository>();
+
+      services.AddSingleton<IListTeamQueryService, ListTeamQueryService>();
 
       //usecase(返り値がない)
       services.AddSingleton<CreateObjectiveUsecase>();
