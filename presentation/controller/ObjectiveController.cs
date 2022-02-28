@@ -29,12 +29,12 @@ namespace teamev.api.Controllers
     // [Authorize]
     [HttpGet]
     [ActionName(nameof(GetObjectivesAsync))]
-    public void GetObjectivesAsync(string teamId, [FromHeader] Header header)
+    public async Task GetObjectivesAsync(string teamId, [FromHeader] Header header)
     {
       Console.WriteLine(teamId);
       string idToken = header.Authorization.Remove(0, 7);
       //firebaseのuidを取得
-      string userUid = firebaseMethod.GetValifyUserUid(idToken);
+      string userUid = await firebaseMethod.GetValifyUserUid(idToken);
       Console.WriteLine(userUid);
     }
 
@@ -50,7 +50,7 @@ namespace teamev.api.Controllers
     public async Task<ActionResult> CreateTeamObjectiveAsync(Guid teamId, [FromBody] ObjectiveBody value, [FromHeader] Header header)
     {
       string idToken = header.getToken();
-      string userUid = firebaseMethod.GetValifyUserUid(idToken);
+      string userUid = await firebaseMethod.GetValifyUserUid(idToken);
       var publicObjectiveId = await createObjectiveUsecase.InvokeAsync(teamId, value.Title, value.Content, value.Author, userUid);
       return CreatedAtAction(nameof(GetObjectivesAsync), new { teamId = teamId }, new { publicObjectiveId = publicObjectiveId });
     }

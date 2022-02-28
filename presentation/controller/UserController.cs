@@ -24,15 +24,20 @@ namespace teamev.api.Controllers
     private readonly FirebaseInitApp _firebaseMethod;
     private readonly CreateUserUsecase _createUserUsecase;
 
+    [HttpGet]
+    public async Task GetUser()
+    {
+      Console.WriteLine("userデータ取得");
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateUserAsync([FromHeader] Header header, [FromBody] UserBody userBody)
     {
-      Console.WriteLine("コントローラ");
       string idToken = header.getToken();
-      string userUid = _firebaseMethod.GetValifyUserUid(idToken);
+      string userUid = await _firebaseMethod.GetValifyUserUid(idToken);
       Guid publicUserId = await _createUserUsecase.InvokeAsync(userUid, userBody.name, userBody.email);
       //修正箇所
-      return CreatedAtAction("", new { publicUserId = publicUserId });
+      return CreatedAtAction(nameof(GetUser), new { publicUserId = publicUserId });
 
     }
   }

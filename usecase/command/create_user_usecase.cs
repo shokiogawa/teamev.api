@@ -20,7 +20,7 @@ namespace teamev.api.usecase.command
     {
       Console.WriteLine("ユースケース");
       //1. userがすでに作られたかどうかの判定
-      await _userDomainService.IsUserCreatedAsync(userUid);
+      await _userDomainService.IsUserNotCreatedAsync(userUid);
       User user = new(userUid, name, email);
       await _userRepo.CreateUserAsync(user);
       return user.PublicUserId;

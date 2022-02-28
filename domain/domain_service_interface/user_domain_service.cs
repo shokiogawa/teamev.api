@@ -3,6 +3,6 @@ namespace teamev.api.domain.domain_service_interface
 {
   public interface IUserDomainService
   {
-    Task IsUserCreatedAsync(string userUid);
+    Task IsUserNotCreatedAsync(string userUid);
   }
 }

@@ -32,9 +32,6 @@ namespace teamev.api.domain.entity
     {
       if (userUid == null || name == null || email == null)
       {
-        Console.WriteLine(userUid);
-        Console.WriteLine(name);
-        Console.WriteLine(email);
         throw new Exception("user parameter is required");
       }
       this.PublicUserId = Guid.NewGuid();

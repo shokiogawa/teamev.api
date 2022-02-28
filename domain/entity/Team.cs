@@ -11,21 +11,23 @@ namespace teamev.api.domain.entity
     [Column(TypeName = "char(36)")]
     public Guid PublicTeamId { get; set; }
 
-    [Required]
-    public int UserId { get; set; }
-
     [Required(ErrorMessage = "team name is required")]
     public string Name { get; set; }
 
     [Required(ErrorMessage = "number is required")]
     public int Number { get; set; }
 
-    public Team(int userId, string name, int number)
+    // public Team(string name)
+    // {
+    //   PublicTeamId = Guid.NewGuid();
+    //   Name = name;
+    //   Number = 1;
+    // }
+
+    public Team CreateTeam(string name)
     {
-      PublicTeamId = Guid.NewGuid();
-      UserId = userId;
-      Name = name;
-      Number = number;
+      Team team = new Team { PublicTeamId = Guid.NewGuid(), Name = name, Number = 1 };
+      return team;
     }
   }
 }

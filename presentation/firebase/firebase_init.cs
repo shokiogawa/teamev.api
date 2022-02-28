@@ -22,17 +22,17 @@ namespace teamev.api.presentation.firebase
       }
     }
 
-    public string GetValifyUserUid(string idToken)
+    public async Task<string> GetValifyUserUid(string idToken)
     {
       try
       {
-        Task<FirebaseToken> task = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
-        task.Wait();
-        string uid = task.Result.Uid;
+        var task = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+        string uid = task.Uid;
         return uid;
       }
       catch (Exception error)
       {
+        Console.WriteLine("ここでエラー");
         throw new InvalidCastException("Can not get userId", error);
       }
     }
