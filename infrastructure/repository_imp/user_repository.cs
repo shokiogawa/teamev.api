@@ -31,9 +31,9 @@ namespace teamev.api.infrastructure.repository_imp
         }
 
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
     }
   }

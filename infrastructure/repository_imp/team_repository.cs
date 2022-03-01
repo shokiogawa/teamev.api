@@ -31,7 +31,7 @@ namespace teamev.api.infrastructure.repository_imp
             }
             else
             {
-              throw new Exception("user is not existed");
+              throw new ArithmeticException("user is not existed");
             }
           }
 
@@ -47,7 +47,7 @@ namespace teamev.api.infrastructure.repository_imp
           if (teamresult != 1)
           {
             await transaction.RollbackAsync();
-            throw new Exception("can not update team table");
+            throw new ArithmeticException("can not update team table");
           }
 
           cmd.CommandText = "SELECT id FROM teams ORDER BY id DESC LIMIT 1";
@@ -69,7 +69,7 @@ namespace teamev.api.infrastructure.repository_imp
           if (result != 1)
           {
             await transaction.RollbackAsync();
-            throw new Exception("can not update user_team_middle table");
+            throw new ArithmeticException("can not update user_team_middle table");
           }
 
           //トランザクションコミット
@@ -78,9 +78,9 @@ namespace teamev.api.infrastructure.repository_imp
         }
 
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
 
     }

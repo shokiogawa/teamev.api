@@ -30,7 +30,7 @@ namespace teamev.api.infrastructure.domain_service_imp
           {
             if (!result.Read())
             {
-              throw new Exception("user dose not belong to team");
+              throw new ArithmeticException("user dose not belong to team");
             }
             else
             {
@@ -40,9 +40,9 @@ namespace teamev.api.infrastructure.domain_service_imp
         }
         return userId;
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
     }
 
@@ -72,9 +72,9 @@ namespace teamev.api.infrastructure.domain_service_imp
           return teamId;
         }
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
     }
 
@@ -103,10 +103,9 @@ namespace teamev.api.infrastructure.domain_service_imp
         }
 
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        Console.WriteLine(error);
-        throw error;
+        throw;
       }
     }
   }

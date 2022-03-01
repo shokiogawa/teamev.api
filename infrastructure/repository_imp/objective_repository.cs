@@ -29,13 +29,13 @@ namespace teamev.api.infrastructure.repository_imp
           var result = await cmd.ExecuteNonQueryAsync();
           if (result != 1)
           {
-            throw new Exception("can not create objective");
+            throw new ArithmeticException("can not create objective");
           }
         }
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
     }
   }

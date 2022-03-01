@@ -39,8 +39,10 @@ namespace teamev.api.presentation.controller
     }
 
     [HttpGet("{id}")]
-    public async Task GetTeamDetail()
+    public async Task GetTeamDetail([FromHeader] Header header)
     {
+      var idToken = header.getToken();
+      string userUid = await _firebaseInitApp.GetValifyUserUid(idToken);
       //チームに所属している人。
       //今日のチーム目標
       //メンバーのチーム目標

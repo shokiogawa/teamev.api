@@ -30,9 +30,9 @@ namespace teamev.api.infrastructure.domain_service_imp
           }
         }
       }
-      catch (Exception error)
+      catch (ArithmeticException)
       {
-        throw error;
+        throw;
       }
     }
 
