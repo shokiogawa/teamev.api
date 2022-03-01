@@ -46,30 +46,30 @@ namespace teamev.api
      {
        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
      }));
-      services.AddDbContext<MyAppContext>(options =>
-      {
-        options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
-      });
+      // services.AddDbContext<MyAppContext>(options =>
+      // {
+      //   options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
+      // });
       //firebase認証
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
-      services.AddSingleton<MysqlDb>();
+      // services.AddSingleton<MysqlDb>();
 
       //ドメインサービス
-      services.AddSingleton<IUserDomainService, UserDomainService>();
-      services.AddSingleton<IObjectiveDomainService, ObjectiveDomainService>();
+      // services.AddSingleton<IUserDomainService, UserDomainService>();
+      // services.AddSingleton<IObjectiveDomainService, ObjectiveDomainService>();
 
       //infrastructure
-      services.AddSingleton<IObjectiveRepository, ObjectiveRepository>();
-      services.AddSingleton<IUserRepository, UserRepository>();
-      services.AddSingleton<ITeamRepository, TeamRepository>();
+      // services.AddSingleton<IObjectiveRepository, ObjectiveRepository>();
+      // services.AddSingleton<IUserRepository, UserRepository>();
+      // services.AddSingleton<ITeamRepository, TeamRepository>();
 
-      services.AddSingleton<IListTeamQueryService, ListTeamQueryService>();
+      // services.AddSingleton<IListTeamQueryService, ListTeamQueryService>();
 
       //usecase(返り値がない)
-      services.AddSingleton<CreateObjectiveUsecase>();
-      services.AddSingleton<CreateUserUsecase>();
-      services.AddSingleton<CreateTeamUsecase>();
+      // services.AddSingleton<CreateObjectiveUsecase>();
+      // services.AddSingleton<CreateUserUsecase>();
+      // services.AddSingleton<CreateTeamUsecase>();
       services.AddControllers();
       // services
       // .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
