@@ -27,6 +27,7 @@ using teamev.api.domain.domain_service_interface;
 using teamev.api.infrastructure.domain_service_imp;
 using teamev.api.usecase.query.query_service_interface;
 using teamev.api.infrastructure.query_service;
+using teamev.api.utility;
 namespace teamev.api
 {
   public class Startup
@@ -54,6 +55,7 @@ namespace teamev.api
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["ConnectionStrings:Default"]));
+      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FirebaseSettings:type"], Configuration["FirebaseSettings:project_id"], Configuration["FirebaseSettings:private_key_id"], Configuration["FirebaseSettings:private_key"], Configuration["FirebaseSettings:client_email"], Configuration["FirebaseSettings:client_id"], Configuration["FirebaseSettings:auth_uri"], Configuration["FirebaseSettings:token_uri"], Configuration["FirebaseSettings:auth_provider_x509_cert_url"], Configuration["FirebaseSettings:client_x509_cert_url"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -94,6 +96,8 @@ namespace teamev.api
       if (env.IsDevelopment())
       {
         Console.WriteLine("Development");
+        Console.WriteLine(Configuration["Test:One"]);
+        Console.WriteLine("上にくる");
         app.UseDeveloperExceptionPage();
       }
       else

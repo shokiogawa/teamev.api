@@ -3,17 +3,22 @@ using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using System;
 using System.Threading.Tasks;
+using teamev.api.utility;
+using System.Text.Json;
 namespace teamev.api.presentation.firebase
 {
   public class FirebaseInitApp
   {
-    public FirebaseInitApp()
+    public readonly FirebaseJson firebaseJson;
+    public FirebaseInitApp(FirebaseJson firebaseJson)
     {
+      this.firebaseJson = firebaseJson;
+      string json = JsonSerializer.Serialize(this.firebaseJson);
       try
       {
         FirebaseApp.Create(new AppOptions()
         {
-          Credential = GoogleCredential.FromFile("firebase_auth.json")
+          Credential = GoogleCredential.FromJson(json)
         });
       }
       catch (Exception e)
