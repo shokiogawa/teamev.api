@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0
 ENV ASPNETCORE_ENVIRONMENT=Development
+# ENV MysqlHosts__Server="test"
 WORKDIR /src
 COPY teamev.api.csproj ./
 RUN dotnet restore

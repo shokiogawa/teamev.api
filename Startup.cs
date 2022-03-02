@@ -53,7 +53,7 @@ namespace teamev.api
       //firebase認証
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
-      services.AddSingleton<MysqlDb>();
+      services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["ConnectionStrings:Default"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -93,10 +93,21 @@ namespace teamev.api
     {
       if (env.IsDevelopment())
       {
+        Console.WriteLine("Development");
         app.UseDeveloperExceptionPage();
-        // app.UseSwagger();
-        // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "teamev.api v1"));
-        // Console.WriteLine("Develop");
+      }
+      else
+      {
+        app.UseExceptionHandler("/Error");
+      }
+      if (env.IsStaging())
+      {
+        Console.WriteLine("Staging");
+      }
+
+      if (env.IsProduction())
+      {
+        Console.WriteLine("Production");
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
