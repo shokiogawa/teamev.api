@@ -69,19 +69,3 @@ ALTER TABLE
   user_objectives
 ADD
   INDEX public_Uobjective(public_objective_id);
--- INSERT INTO
-  --   users (user_uid, name, email, password) VALUE(
-  --     "jIYzNBUYWcNpMkvpxdofV0UEezx1",
-  --     "小川翔生",
-  --     "shouki2578@gmail.com",
-  --     "secret"
-  --   );
-  -- INSERT INTO
-  --   teams (public_team_id, name, number) VALUE (
-  --     "c36f55b0-b96a-47ed-80a8-170a01fd9720",
-  --     "Teamev",
-  --     0
-  --   );
-  -- INSERT INTO
-  --   user_team_middles(user_id, team_id, status)
-  -- VALUES(1, 1, "LEADER")
