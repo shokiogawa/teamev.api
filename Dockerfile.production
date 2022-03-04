@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+ENV ASPNETCORE_ENVIRONMENT=Production
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY teamev.api.csproj ./
+RUN dotnet restore
+COPY . .
+ENV PATH="$PATH:/root/.dotnet/tools"
+RUN dotnet publish -c Release -o /app/publish 
+# && dotnet tool install --global dotnet-ef && dotnet ef database update
+
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT [ "dotnet", "teamev.api.dll" ]
