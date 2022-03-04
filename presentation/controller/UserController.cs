@@ -16,13 +16,15 @@ namespace teamev.api.Controllers
   [Route("signin")]
   public class UserController : ControllerBase
   {
-    public UserController(FirebaseInitApp _firebaseInitApp, CreateUserUsecase _createUserUsecase)
+    public UserController(
+      // FirebaseInitApp _firebaseInitApp, CreateUserUsecase _createUserUsecase
+      )
     {
-      this._firebaseMethod = _firebaseInitApp;
-      this._createUserUsecase = _createUserUsecase;
+      // this._firebaseMethod = _firebaseInitApp;
+      // this._createUserUsecase = _createUserUsecase;
     }
-    private readonly FirebaseInitApp _firebaseMethod;
-    private readonly CreateUserUsecase _createUserUsecase;
+    // private readonly FirebaseInitApp _firebaseMethod;
+    // private readonly CreateUserUsecase _createUserUsecase;
 
     [HttpGet]
     public async Task GetUser()
@@ -33,11 +35,11 @@ namespace teamev.api.Controllers
     [HttpPost]
     public async Task<ActionResult> CreateUserAsync([FromHeader] Header header, [FromBody] UserBody userBody)
     {
-      string idToken = header.getToken();
-      string userUid = await _firebaseMethod.GetValifyUserUid(idToken);
-      Guid publicUserId = await _createUserUsecase.InvokeAsync(userUid, userBody.name, userBody.email);
+      // string idToken = header.getToken();
+      // string userUid = await _firebaseMethod.GetValifyUserUid(idToken);
+      // Guid publicUserId = await _createUserUsecase.InvokeAsync(userUid, userBody.name, userBody.email);
       //修正箇所
-      return CreatedAtAction(nameof(GetUser), new { publicUserId = publicUserId });
+      return CreatedAtAction(nameof(GetUser), new { publicUserId = "publicid" });
 
     }
   }
