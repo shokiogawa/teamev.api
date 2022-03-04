@@ -110,6 +110,9 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
+        Console.WriteLine(Configuration["TEST_ENV"]);
+        Console.WriteLine("やあ");
+        Console.WriteLine(Configuration["ConnectionStrings:Default"]);
         Console.WriteLine("こんにちは");
       }
       //httpをhttpsにリダイレクトさせるもの。
