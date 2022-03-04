@@ -111,7 +111,7 @@ namespace teamev.api
       {
         Console.WriteLine("Production");
         Console.WriteLine(Configuration["TEST_ENV"]);
-        Console.WriteLine("やあa");
+        Console.WriteLine("来てた");
         Console.WriteLine(Configuration["ConnectionStrings:Default"]);
         Console.WriteLine("こんにちは");
       }
