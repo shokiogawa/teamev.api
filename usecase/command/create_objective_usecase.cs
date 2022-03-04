@@ -25,7 +25,7 @@ namespace teamev.api.usecase.command
       //2. ユーザーがリーダーかどうかの確認。 (中間テーブルにステータスをもたす。)
       var teamId = await _objectiveDomainService.IsUserLeader(userUid, publicTeamId);
 
-      //3. 今日作られたチーム目標がないかの確認。
+      //3. 今日作られたチーム目標がないかの確認
       await _objectiveDomainService.HasTObjectiveCreated(publicTeamId);
 
       ObjectiveInfo objectiveInfo = new(title, content, author);
