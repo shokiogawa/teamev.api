@@ -96,11 +96,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
-        Console.WriteLine(Configuration["FirebaseSettings:type"]);
-        Console.WriteLine("来てた");
-        Console.WriteLine(Configuration["FirebaseSettings:private_key"]);
         Console.WriteLine(Configuration["ConnectionStrings:Default"]);
-        Console.WriteLine("こんにちは");
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
