@@ -73,20 +73,6 @@ namespace teamev.api
       services.AddSingleton<CreateUserUsecase>();
       services.AddSingleton<CreateTeamUsecase>();
       services.AddControllers();
-      // services
-      // .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-      // .AddJwtBearer(options =>
-      // {
-      //   options.Authority = "https://securetoken.google.com/teamev-3d0e0";
-      //   options.TokenValidationParameters = new TokenValidationParameters
-      //   {
-      //     ValidateIssuer = true,
-      //     ValidIssuer = "https://securetoken.google.com/teamev-3d0e0",
-      //     ValidateAudience = true,
-      //     ValidAudience = "teamev-3d0e0",
-      //     ValidateLifetime = true
-      //   };
-      // });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,7 +96,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
-        Console.WriteLine(Configuration["TEST_ENV"]);
+        Console.WriteLine(Configuration["FirebaseSettings:type"]);
         Console.WriteLine("来てた");
         Console.WriteLine(Configuration["ConnectionStrings:Default"]);
         Console.WriteLine("こんにちは");
