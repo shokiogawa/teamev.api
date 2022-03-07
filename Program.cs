@@ -19,7 +19,7 @@ namespace teamev.api
 
     public static IHostBuilder CreateHostBuilder(string[] args)
     {
-      DotNetEnv.Env.Load();
+      DotNetEnv.Env.Load("./production.env");
       return Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {

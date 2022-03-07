@@ -110,6 +110,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
+        Console.WriteLine(Configuration["FIREBASE_CLIENT_EMAIL"]);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
