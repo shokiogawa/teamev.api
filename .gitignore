@@ -4,5 +4,7 @@ mysql
 firebase_auth.json
 bin
 obj
-# appsettings.Development.json
-# appsettings.json
+appsettings.Development.json
+appsettings.json
+.env
+production.env

@@ -54,8 +54,8 @@ namespace teamev.api
       //firebase認証
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
-      services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["ConnectionStrings:Default"]));
-      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FirebaseSettings:type"], Configuration["FirebaseSettings:project_id"], Configuration["FirebaseSettings:private_key_id"], Configuration["FirebaseSettings:private_key"], Configuration["FirebaseSettings:client_email"], Configuration["FirebaseSettings:client_id"], Configuration["FirebaseSettings:auth_uri"], Configuration["FirebaseSettings:token_uri"], Configuration["FirebaseSettings:auth_provider_x509_cert_url"], Configuration["FirebaseSettings:client_x509_cert_url"]));
+      services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["MYSQL_DSN"]));
+      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], Configuration["FIREBASE_PRIVATE_KEY"], Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -96,8 +96,6 @@ namespace teamev.api
       if (env.IsDevelopment())
       {
         Console.WriteLine("Development");
-        Console.WriteLine(Configuration["Test:One"]);
-        Console.WriteLine("上にくる");
         app.UseDeveloperExceptionPage();
       }
       else
@@ -112,6 +110,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
+        Console.WriteLine(Configuration["FIREBASE_CLIENT_EMAIL"]);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
