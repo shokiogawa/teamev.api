@@ -34,8 +34,6 @@ namespace teamev.api.presentation.controller
       string userUid = await _firebaseInitApp.GetValifyUserUid(idToken);
       var teamList = await _listTeamQueryService.InvokeAsync(userUid);
       return teamList;
-      // Console.WriteLine("自分が所属しているチームを取得");
-      // return [];
     }
 
     [HttpGet("{id}")]
@@ -43,11 +41,6 @@ namespace teamev.api.presentation.controller
     {
       var idToken = header.getToken();
       string userUid = await _firebaseInitApp.GetValifyUserUid(idToken);
-      //チームに所属している人。
-      //今日のチーム目標
-      //メンバーのチーム目標
-
-      Console.WriteLine("チームの詳細情報を取得");
     }
 
     [HttpPost]
