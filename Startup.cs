@@ -49,7 +49,7 @@ namespace teamev.api
      }));
       services.AddDbContext<MyAppContext>(options =>
       {
-        options.UseMySQL("server=localhost;database=mysql;user=user;password=secret");
+        options.UseMySQL(Configuration["MYSQL_DSN"]);
       });
       //firebase認証
       services.AddSingleton<FirebaseInitApp>();
