@@ -113,7 +113,7 @@ namespace teamev.api
         Console.WriteLine("------------以下情報----------");
         Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
         Console.WriteLine(Configuration["MYSQL_DSN"]);
-        Console.WriteLine("------------以下TEST情報----------");
+        Console.WriteLine("------------以下TEST情報-----------");
         Console.WriteLine(Configuration["TEST_FIREBASE"]);
       }
       //httpをhttpsにリダイレクトさせるもの。
