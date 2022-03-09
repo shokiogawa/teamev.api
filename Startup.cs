@@ -55,7 +55,7 @@ namespace teamev.api
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["MYSQL_DSN"]));
-      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], Configuration["FIREBASE_PRIVATE_KEY"], Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
+      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], createApiKey(), Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -88,6 +88,16 @@ namespace teamev.api
       //   };
       // });
     }
+    public string createApiKey()
+    {
+      string firebasApiKey = Configuration["FIREBASE_PRIVATE_KEY"];
+      for (int num = 1; num <= 27; num++)
+      {
+        firebasApiKey += '\n' + Configuration["FIREBASE_PRIVATE_KEY" + num.ToString()];
+      }
+      Console.WriteLine(firebasApiKey);
+      return firebasApiKey;
+    }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
@@ -110,14 +120,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
-        Console.WriteLine("------------以下情報----------");
-        Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
-        Console.WriteLine(Configuration["MYSQL_DSN"]);
-        Console.WriteLine("------------以下TEST情報-----------");
-        Console.WriteLine("LISTが下に来る。");
-        var test = Configuration["FIREBASE_PRIVATE_KEY"];
-        string[] tests = test.Split('\n');
-        Console.WriteLine(tests);
+
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
