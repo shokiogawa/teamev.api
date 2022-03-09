@@ -114,13 +114,8 @@ namespace teamev.api
         Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
         Console.WriteLine(Configuration["MYSQL_DSN"]);
         Console.WriteLine("------------以下TEST情報-----------");
-        Console.WriteLine(Configuration["TEST_FIREBASE"]);
-        Console.WriteLine("-------変数に挿入");
-        var test = Configuration["TEST_FIREBASE"];
-        Console.WriteLine(test);
-        Console.WriteLine("GetValue方法");
-        Console.WriteLine(Configuration.GetValue<string>("TEST_FIREBASE"));
         Console.WriteLine("LISTが下に来る。");
+        var test = Configuration["FIREBASE_PRIVATE_KEY"];
         string[] tests = test.Split('\n');
         Console.WriteLine(tests);
       }
