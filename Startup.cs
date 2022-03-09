@@ -111,6 +111,7 @@ namespace teamev.api
       {
         Console.WriteLine("Production");
         Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
+        Console.WriteLine(Configuration["MYSQL_DSN"]);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
