@@ -55,7 +55,7 @@ namespace teamev.api
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["MYSQL_DSN"]));
-      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], Configuration["FIREBASE_API"], Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
+      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], Configuration["FIREBASE_PRIVATE_KEY"], Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
@@ -110,7 +110,8 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
-        Console.WriteLine(Configuration["FIREBASE_CLIENT_EMAIL"]);
+        Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
+        Console.WriteLine(Configuration["MYSQL_DSN"]);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
