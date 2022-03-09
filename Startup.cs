@@ -110,6 +110,7 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
+        Console.WriteLine("------------以下情報----------");
         Console.WriteLine(Configuration["FIREBASE_PRIVATE_KEY"]);
         Console.WriteLine(Configuration["MYSQL_DSN"]);
       }
