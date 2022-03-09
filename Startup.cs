@@ -120,6 +120,9 @@ namespace teamev.api
         Console.WriteLine(test);
         Console.WriteLine("GetValue方法");
         Console.WriteLine(Configuration.GetValue<string>("TEST_FIREBASE"));
+        Console.WriteLine("以下リスト");
+        string[] tests = test.Split('\n');
+        Console.WriteLine(tests);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
