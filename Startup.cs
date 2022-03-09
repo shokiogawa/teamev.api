@@ -115,6 +115,9 @@ namespace teamev.api
         Console.WriteLine(Configuration["MYSQL_DSN"]);
         Console.WriteLine("------------以下TEST情報-----------");
         Console.WriteLine(Configuration["TEST_FIREBASE"]);
+        Console.WriteLine("-------変数に挿入");
+        var test = Configuration["TEST_FIREBASE"];
+        Console.WriteLine(test);
       }
       //httpをhttpsにリダイレクトさせるもの。
       //   app.UseHttpsRedirection();
