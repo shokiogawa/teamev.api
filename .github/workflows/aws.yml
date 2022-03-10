@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - github_action_migration
 
 env:
   AWS_REGION: ap-northeast-1
