@@ -120,8 +120,6 @@ namespace teamev.api
       if (env.IsProduction())
       {
         Console.WriteLine("Production");
-        var test = createApiKey();
-        Console.WriteLine(test);
 
       }
       //httpをhttpsにリダイレクトさせるもの。
