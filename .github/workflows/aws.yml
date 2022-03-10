@@ -8,6 +8,7 @@ on:
 env:
   AWS_REGION: ap-northeast-1
   ECR_REPOSITORY: teamev
+  ECR_MIGRATION_REPOSITORY: teamev_migration
   ECS_SERVICE: teamev-service
   ECS_CLUSTER: teamev-cluster
   ECS_TASK_DEFINITION: .aws/task-definition.json
@@ -39,26 +40,29 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
+          ECR_MIGRATION_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_MIGRATION_TAG: ${{ github.sha }}
         run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.production .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
+          docker build -t $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG -f Dockerfile.migration .
+          docker push $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG
+          echo "::set-output name=image::$ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG"
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+      # - name: Fill in the new image ID in the Amazon ECS task definition
+      #   id: task-def
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
+      #     container-name: ${{ env.CONTAINER_NAME }}
+      #     image: ${{ steps.build-image.outputs.image }}
+
+      # - name: Deploy Amazon ECS task definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+      #     service: ${{ env.ECS_SERVICE }}
+      #     cluster: ${{ env.ECS_CLUSTER }}
+      #     wait-for-service-stability: true
