@@ -41,7 +41,7 @@ namespace teamev.api
 
     // This method gets called by the runtime. Use this method to add services to the container.
     //COnfigureServicesはDIを定義するためのメソッド
-    public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+    public void ConfigureServices(IServiceCollection services)
     {
       services.AddCors(o => o.AddDefaultPolicy(builder =>
      {
@@ -55,16 +55,7 @@ namespace teamev.api
       services.AddSingleton<FirebaseInitApp>();
       //mysqlの接続かつ1つのインスタンスを作成
       services.AddSingleton<MysqlDb>(_ => new MysqlDb(Configuration["MYSQL_DSN"]));
-      string firebaseApiKey = "";
-      if (env.IsDevelopment())
-      {
-        firebaseApiKey = Configuration["FIREBASE_PRIVATE_KEY"];
-      }
-      else
-      {
-        firebaseApiKey = createApiKey();
-      }
-      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], firebaseApiKey, Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
+      services.AddSingleton<FirebaseJson>(_ => new FirebaseJson(Configuration["FIREBASE_TYPE"], Configuration["FIREBASE_PROJECT_ID"], Configuration["FIREBASE_PRIVATE_KEY_ID"], createApiKey(), Configuration["FIREBASE_CLIENT_EMAIL"], Configuration["FIREBASE_CLIENT_ID"], Configuration["FIREBASE_AUTH_URI"], Configuration["FIREBASE_TOKEN_URI"], Configuration["FIREBASE_AUTH_PROVIDER"], Configuration["FIREBASE_CLIENT"]));
 
       //ドメインサービス
       services.AddSingleton<IUserDomainService, UserDomainService>();
