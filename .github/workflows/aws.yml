@@ -41,13 +41,17 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
-          ECR_MIGRATION_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_MIGRATION_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile.production .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+      - name: Build, tag, and push image to Amazon ECR for Migration
+        id: build-migration-image
+        env:
+          ECR_MIGRATION_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_MIGRATION_TAG: ${{ github.sha }}
+        run: |
           docker build -t $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG -f Dockerfile.migration .
           docker push $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG
           echo "::set-output name=image::$ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG"
