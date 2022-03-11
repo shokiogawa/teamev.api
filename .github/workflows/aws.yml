@@ -56,6 +56,30 @@ jobs:
           docker push $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG
           echo "::set-output name=image::$ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG"
 
+      - name: Download ecspresso
+        uses: kayac/ecspresso@v0
+        with:
+        version: v1.5.3
+
+      - name: Register task definition
+        run: ecspresso register --config .aws/config.yml
+
+      - name: Migrate db to mysql
+        run: |
+          ecspresso run --config .aws/config.yml \ --latest-task-definition \ --watch-container=teamev-migration \ 
+          --overrides='
+          {
+            "containerOverrides":[
+              {
+                "name": "teamev-migration", 
+                "command": ["dotnet", "ef", "database", "update", "0"]
+              }
+            ]
+          }'
+
+      - name: Deploy to ecs
+        run: ecspresso deploy --config config.yaml --latest-task-definition
+
       # - name: Fill in the new image ID in the Amazon ECS task definition
       #   id: task-def
       #   uses: aws-actions/amazon-ecs-render-task-definition@v1
