@@ -46,45 +46,35 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Build, tag, and push image to Amazon ECR for Migration
-        id: build-migration-image
-        env:
-          ECR_MIGRATION_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_MIGRATION_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG -f Dockerfile.migration .
-          docker push $ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG
-          echo "::set-output name=image::$ECR_MIGRATION_REGISTRY/$ECR_MIGRATION_REPOSITORY:$IMAGE_MIGRATION_TAG"
+      # - name: Download ecspresso
+      #   uses: kayac/ecspresso@v0
+      #   with:
+      #     version: v1.5.3
 
-      - name: Download ecspresso
-        uses: kayac/ecspresso@v0
-        with:
-          version: v1.5.3
+      # - name: Register task definition
+      #   run: ecspresso register --config .aws/config.yml
 
-      - name: Register task definition
-        run: ecspresso register --config .aws/config.yml
-
-      - name: Migrate db to mysql
-        #コマンドを打ったら正常終了する。
-        run: |
-          ecspresso run --config .aws/config.yml --latest-task-definition
+      # - name: Migrate db to mysql
+      #   #コマンドを打ったら正常終了する。
+      #   run: |
+      #     ecspresso run --config .aws/config.yml --latest-task-definition --overrides='{"containerOverrides":[{"name": "teamev-migration", "command": ["dotnet", "ef", "database", "update", "0"]}]}'
 
       # - name: Deploy to ecs
       #   # ここでconfig.ymlをマイグレーション用と、webapi用で用意するのがいいのかも。
       #   run: ecspresso deploy --config config.yaml --latest-task-definition
 
-      # - name: Fill in the new image ID in the Amazon ECS task definition
-      #   id: task-def
-      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-      #   with:
-      #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
-      #     container-name: ${{ env.CONTAINER_NAME }}
-      #     image: ${{ steps.build-image.outputs.image }}
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
 
-      # - name: Deploy Amazon ECS task definition
-      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      #   with:
-      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
-      #     service: ${{ env.ECS_SERVICE }}
-      #     cluster: ${{ env.ECS_CLUSTER }}
-      #     wait-for-service-stability: true
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
