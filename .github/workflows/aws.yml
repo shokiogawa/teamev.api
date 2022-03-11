@@ -66,7 +66,7 @@ jobs:
 
       - name: Migrate db to mysql
         run: |
-          ecspresso run --config .aws/config.yml \ --latest-task-definition \ --watch-container=teamev-migration \ 
+          ecspresso run --config .aws/config.yml --latest-task-definition \ --watch-container=teamev-migration \ 
           --overrides='
           {
             "containerOverrides":[
