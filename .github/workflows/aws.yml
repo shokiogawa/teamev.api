@@ -67,7 +67,7 @@ jobs:
       - name: Migrate db to mysql
         #コマンドを打ったら正常終了する。
         run: |
-          ecspresso run --config .aws/config.yml --latest-task-definition --watch-container=teamev-migration --overrides='{"containerOverrides":[{"name": "teamev-migration", "command": ["dotnet", "ef", "database", "update", "0"]}]}'
+          ecspresso run --config .aws/config.yml --latest-task-definition --overrides='{"containerOverrides":[{"name": "teamev-migration", "command": ["dotnet", "ef", "database", "update", "0"]}]}'
 
       # - name: Deploy to ecs
       #   # ここでconfig.ymlをマイグレーション用と、webapi用で用意するのがいいのかも。
